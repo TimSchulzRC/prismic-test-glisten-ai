@@ -1,6 +1,8 @@
+import WordMark from "@/components/Wordmark";
 
 export default function Footer() {
   return (
-    <div>Footer</div>
+    <div><WordMark/></div>
+
   )
 }

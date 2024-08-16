@@ -1,6 +1,7 @@
+import WordMark from "@/components/Wordmark";
 
 export default function Header() {
   return (
-    <div>Header</div>
+    <div><WordMark/></div>
   )
 }

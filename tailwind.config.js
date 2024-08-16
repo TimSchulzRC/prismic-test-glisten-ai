@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-dm-sans)"],
       },
+      colors: {
+        dark: "#070815"
+      }
     },
   },
   plugins: [],
