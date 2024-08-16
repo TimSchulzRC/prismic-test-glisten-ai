@@ -1,7 +1,9 @@
-import WordMark from "@/components/Wordmark";
+import Navbar from "@/components/Navbar";
+import { createClient } from "@/prismicio";
 
-export default function Header() {
-  return (
-    <div><WordMark/></div>
-  )
+export default async function Header() {
+  const client = createClient();
+  const settings = await client.getSingle("settings");
+
+  return <Navbar settings={settings} />;
 }
