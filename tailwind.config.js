@@ -7,9 +7,9 @@ module.exports = {
         sans: ["var(--font-dm-sans)"],
       },
       colors: {
-        dark: "#070815"
-      }
+        dark: "#070815",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
