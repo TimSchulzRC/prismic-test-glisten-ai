@@ -1,5 +1,78 @@
+"use client";
+
+import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef } from "react";
+
 export default function StarGrid() {
+  const container = useRef(null);
+  const preferesReducedMotion = usePrefersReducedMotion();
+
+  gsap.registerPlugin(useGSAP);
+
   const grid = [14, 30] as const;
+
+  useGSAP(
+    () => {
+      if (preferesReducedMotion) {
+        gsap.set(container.current, { opacity: 1 });
+        gsap.set(".star-grid-item", { opacity: 0.2, scale: 1, color: "white" });
+        return;
+      }
+
+      gsap.set(".star-grid-item", {
+        opacity: 0,
+        transformOrigin: "center",
+        color: "white",
+      });
+      gsap.set(container.current, { opacity: 1 });
+
+      const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+
+      const keyframes = [
+        {
+          opacity: 0.4,
+          rotate: "+=180",
+          color: "#ffd057",
+          scale: 3,
+          duration: 0.6,
+          stagger: {
+            amount: 2, // duration for the whole animation
+            grid: grid,
+            from: "center",
+          },
+        },
+        {
+          opacity: 0.2,
+          rotate: "+=180",
+          color: "white",
+          scale: 1,
+          delay: -2,
+          duration: 0.6,
+          stagger: {
+            amount: 2, // duration for the whole animation
+            grid: grid,
+            from: "center",
+          },
+        },
+      ];
+
+      // Entrance Animation
+      tl.to(".star-grid-item", {
+        keyframes: [{ opacity: 0, duration: 0 }, ...keyframes],
+      });
+
+      // Loop animation
+      tl.to(".star-grid-item", {
+        delay: 8,
+        repeat: -1,
+        repeatDelay: 8,
+        keyframes,
+      });
+    },
+    { scope: container },
+  );
 
   return (
     <svg
@@ -8,7 +81,8 @@ export default function StarGrid() {
       viewBox="0 0 935 425"
       className="absolute -top-14 -z-10"
       id="star-grid"
-      //   opacity={0}
+      ref={container}
+      opacity={0}
       style={{
         maskImage: "linear-gradient(black, transparent)",
       }}
