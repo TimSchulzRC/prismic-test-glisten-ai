@@ -103,6 +103,7 @@ export type CaseStudyDocument<Lang extends string = string> =
   >;
 
 type PageDocumentDataSlicesSlice =
+  | IntegrationsSlice
   | CaseStudiesSlice
   | ShowcaseSlice
   | BentoSlice
@@ -396,6 +397,36 @@ type BentoSliceVariation = BentoSliceDefault;
 export type BentoSlice = prismic.SharedSlice<"bento", BentoSliceVariation>;
 
 /**
+ * Default variation for CallToAction Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CallToActionSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *CallToAction*
+ */
+type CallToActionSliceVariation = CallToActionSliceDefault;
+
+/**
+ * CallToAction Shared Slice
+ *
+ * - **API ID**: `call_to_action`
+ * - **Description**: CallToAction
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CallToActionSlice = prismic.SharedSlice<
+  "call_to_action",
+  CallToActionSliceVariation
+>;
+
+/**
  * Item in *CaseStudies → Default → Primary → case studies*
  */
 export interface CaseStudiesSliceDefaultPrimaryCaseStudiesItem {
@@ -558,6 +589,88 @@ type HeroSliceVariation = HeroSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slice
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Item in *Integrations → Default → Primary → Icons*
+ */
+export interface IntegrationsSliceDefaultPrimaryIconsItem {
+  /**
+   * Icon field in *Integrations → Default → Primary → Icons*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: integrations.default.primary.icons[].icon
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  icon: prismic.SelectField<
+    "cloudflare" | "npm" | "github" | "figma" | "digitalocean" | "fly"
+  >;
+}
+
+/**
+ * Primary content in *Integrations → Default → Primary*
+ */
+export interface IntegrationsSliceDefaultPrimary {
+  /**
+   * Heading field in *Integrations → Default → Primary*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: integrations.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  heading: prismic.TitleField;
+
+  /**
+   * Body field in *Integrations → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: integrations.default.primary.body
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  body: prismic.RichTextField;
+
+  /**
+   * Icons field in *Integrations → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: integrations.default.primary.icons[]
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  icons: prismic.GroupField<Simplify<IntegrationsSliceDefaultPrimaryIconsItem>>;
+}
+
+/**
+ * Default variation for Integrations Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type IntegrationsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<IntegrationsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Integrations*
+ */
+type IntegrationsSliceVariation = IntegrationsSliceDefault;
+
+/**
+ * Integrations Shared Slice
+ *
+ * - **API ID**: `integrations`
+ * - **Description**: Integrations
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type IntegrationsSlice = prismic.SharedSlice<
+  "integrations",
+  IntegrationsSliceVariation
+>;
 
 /**
  * Primary content in *RichText → Default → Primary*
@@ -822,6 +935,9 @@ declare module "@prismicio/client" {
       BentoSliceDefaultPrimary,
       BentoSliceVariation,
       BentoSliceDefault,
+      CallToActionSlice,
+      CallToActionSliceVariation,
+      CallToActionSliceDefault,
       CaseStudiesSlice,
       CaseStudiesSliceDefaultPrimaryCaseStudiesItem,
       CaseStudiesSliceDefaultPrimary,
@@ -831,6 +947,11 @@ declare module "@prismicio/client" {
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      IntegrationsSlice,
+      IntegrationsSliceDefaultPrimaryIconsItem,
+      IntegrationsSliceDefaultPrimary,
+      IntegrationsSliceVariation,
+      IntegrationsSliceDefault,
       RichTextSlice,
       RichTextSliceDefaultPrimary,
       RichTextSliceVariation,
