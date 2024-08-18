@@ -6,6 +6,7 @@ import Bounded from "@/components/Bounded";
 import StarGrid from "@/components/StarGrid";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
+import { asText } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 
 type Params = { uid: string };
@@ -49,7 +50,7 @@ export async function generateMetadata({
     .catch(() => notFound());
 
   return {
-    title: page.data.meta_title,
+    title: `${page.data.meta_title || asText(page.data.company) + " Case Study"}`,
     description: page.data.meta_description,
   };
 }
