@@ -30,12 +30,16 @@ type Props = {
 
 export default function AnimatedContent({ slice }: Props) {
   const container = useRef(null);
-  const preferesReducedMotion = usePrefersReducedMotion();
-
+  const prefersReducedMotion = usePrefersReducedMotion();
   gsap.registerPlugin(useGSAP);
 
   useGSAP(
     () => {
+      if (prefersReducedMotion) {
+        gsap.set(".pulsing-logo", { opacity: 1 });
+        gsap.set(".pulsing-icon", { opacity: 1 });
+        return;
+      }
       const tl = gsap.timeline({
         repeat: -1,
         defaults: { ease: "power2.inOut" },

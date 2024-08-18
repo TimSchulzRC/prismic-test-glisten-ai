@@ -12,12 +12,12 @@ type Props = {
 
 export default function AnimatedContent({ children }: Props) {
   const container = useRef(null);
-  const preferesReducedMotion = usePrefersReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   gsap.registerPlugin(useGSAP, ScrollTrigger);
 
   useGSAP(
     () => {
-      if (preferesReducedMotion) {
+      if (prefersReducedMotion) {
         return gsap.set(container.current, { y: 0 });
       }
       gsap.fromTo(

@@ -16,13 +16,13 @@ type Props = {
 
 export default function AnimatedContent({ slice }: Props) {
   const container = useRef(null);
-  const preferesReducedMotion = usePrefersReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   gsap.registerPlugin(useGSAP);
 
   useGSAP(
     () => {
-      if (preferesReducedMotion)
+      if (prefersReducedMotion)
         return gsap.set(
           ".hero__heading, .hero__body, .hero__button, .hero__image, .hero__glow",
           { opacity: 1 },
